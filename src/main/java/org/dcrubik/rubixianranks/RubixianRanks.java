@@ -1,47 +1,44 @@
 package org.dcrubik.rubixianranks;
 
-import org.bukkit.event.Listener;
+import lombok.Getter;
 import org.bukkit.permissions.PermissionAttachment;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.dcrubik.rubixianranks.commands.SetRankCommand;
 import org.dcrubik.rubixianranks.commands.TestCommand;
-import org.dcrubik.rubixianranks.listeners.RankListeners;
-import org.dcrubik.rubixianranks.listeners.RankListeners;
-
+import org.dcrubik.rubixianranks.listeners.PlayerListener;
 import java.util.HashMap;
 import java.util.UUID;
 
-public final class RubixianRanks extends JavaPlugin {
 
-    private  static HashMap<UUID, PermissionAttachment> perms = new HashMap<>();
-    private static RubixianRanks rank;
+public final class RubixianRanks extends JavaPlugin {
+    @Getter
+    private static final HashMap<UUID, PermissionAttachment> permissions = new HashMap<>();
+    @Getter
+    private static RubixianRanks instance;
 
     @Override
     public void onEnable() {
-        RankListeners rankListeners = new RankListeners();
-        rank = this;
+        instance = this;
 
-        getConfig().options().copyDefaults(true);
-        saveConfig();
+        this.getConfig().options().copyDefaults(true);
+        this.saveConfig();
 
-        getServer().getPluginManager().registerEvents((Listener) rankListeners, this);
-        getCommand("setrank").setExecutor(new SetRankCommand());
-        getCommand("test").setExecutor(new TestCommand());
+       this.registerListener();
+       this.registerCommand();
+    }
+
+    private void registerListener(){
+        this.getServer().getPluginManager().registerEvents(new PlayerListener(), this);
+    }
+
+    private void registerCommand(){
+        this.getCommand("setrank").setExecutor(new SetRankCommand());
+        this.getCommand("test").setExecutor(new TestCommand());
     }
 
     @Override
     public void onDisable() {
-        rank = null;
-        perms.clear();
-
-    }
-
-    public static RubixianRanks getRank(){
-        return rank;
-    }
-
-    public static HashMap<UUID, PermissionAttachment> getPerms(){
-        return perms;
+        permissions.clear();
     }
 
 }

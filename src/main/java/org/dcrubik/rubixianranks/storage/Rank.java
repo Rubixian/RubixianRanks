@@ -1,7 +1,9 @@
 package org.dcrubik.rubixianranks.storage;
 
+import lombok.Getter;
 import org.bukkit.ChatColor;
 
+@Getter
 public enum Rank {
 
     OWNER(ChatColor.RED + "[" + ChatColor.RED + "OWNER" + ChatColor.RED + "] ", new String[]{"test.use"}),
@@ -23,11 +25,4 @@ public enum Rank {
         this.permissions = permissions;
     }
 
-    public String getPrefix() {
-        return prefix;
-    }
-
-    public String[] getPermissions(){
-        return permissions;
-    }
 }
