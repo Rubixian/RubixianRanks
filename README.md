@@ -16,3 +16,4 @@ I made this plugin because I wanted to test a own rank system and it works well.
 Any contributions will be accepted. And it will be mentioned.
 
 @ÐcRubik - 2024
+@TheKingXD - 2024
